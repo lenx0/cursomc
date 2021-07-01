@@ -14,12 +14,13 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.thiagodev.cursomc.domain.enums.TipoCliente;
 
 @Entity
 public class Cliente implements Serializable {
 	private static final long serialVersionUID = 1L;
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
@@ -28,11 +29,12 @@ public class Cliente implements Serializable {
 	private String cpfOuCnpj;
 	private Integer tipo;
 
-	@OneToMany(mappedBy="cliente") // mappedBy temos que colocar qual campo foi mapeano no caso cliente
+	@JsonManagedReference
+	@OneToMany(mappedBy = "cliente") // mappedBy temos que colocar qual campo foi mapeano no caso cliente
 	private List<Endereco> enderecos = new ArrayList<>();
 
 	@ElementCollection
-	@CollectionTable(name="TELEFONE")//qual tabela que vai ser criada para armazenar os telefones??
+	@CollectionTable(name = "TELEFONE") // qual tabela que vai ser criada para armazenar os telefones??
 	private Set<String> telefones = new HashSet<>();
 
 	public Cliente() {
